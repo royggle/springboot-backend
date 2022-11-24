@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵퍼에 대해서도 잘 모르겠음 정확히 리절트 타입  -->
+<mapper namespace="com.assignment.board.repositories.BoardsRepository">
+    <select id="readCount" resultType="Integer">
+		SELECT
+			count(*)
+		FROM Board b
+    </select>
+    <select id="read" resultType="Board">
+		SELECT
+			b.board_idx, b.title, b.created_datetime, b.id
+		FROM Board b
+		LIMIT #{offset}, 5
+    </select>
+    <select id="detail" resultType="Board">
+		SELECT
+			b.board_idx, b.title, b.contents, b.created_datetime, b.id
+		FROM Board b
+		WHERE b.board_idx = #{board_idx}
+    </select>
+	<select id="password" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM Board b
+		WHERE b.board_idx = #{board_idx}
+		AND b.password = #{password};
+    </select>
+    <insert id="create" parameterType="Board">
+        INSERT INTO Board(title, contents, id, password) 
+        VALUES(#{title}, #{contents}, #{id}, #{password})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM Board where board_idx = #{board_idx}
+    </delete>
+
+    <update id="update">
+        UPDATE Board 
+        SET title = #{board.title}, contents = #{board.contents}
+        WHERE board_idx = #{board_idx}
+    </update>
+</mapper>

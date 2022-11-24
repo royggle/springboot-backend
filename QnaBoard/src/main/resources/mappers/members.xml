@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.assignment.board.repositories.MembersRepository">
+    <select id="read" resultType="MemberRead">
+        SELECT * FROM Member
+    </select>
+    <select id="login" resultType="MemberRead">
+        SELECT member_idx, id FROM Member
+        WHERE id = #{id} and password = #{password}
+    </select>
+    <insert id="create" parameterType="Member">
+        insert into Member(id, name, password) values(#{id}, #{name}, #{password})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from Member where member_idx = #{member_idx}
+    </delete>
+
+    <update id="update">
+        update Member set name = #{member.name}, password = #{member.password} where member_idx = #{member_idx}
+    </update>
+</mapper>

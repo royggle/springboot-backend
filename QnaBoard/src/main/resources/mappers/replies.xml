@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 맵퍼에 대해서도 잘 모르겠음 정확히 리절트 타입  -->
+<mapper namespace="com.assignment.board.repositories.RepliesRepository">
+    <select id="read" resultType="Reply">
+		SELECT r.reply_idx, r.board_idx, r.contents, r.created_datetime, r.id 
+		FROM Reply r 
+		WHERE r.board_idx = #{board_idx}
+    </select>
+    <insert id="create" parameterType="Reply">
+        insert into Reply(contents, board_idx, id) 
+        values(#{contents}, #{board_idx}, #{id})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from Reply where reply_idx = #{reply_idx}
+    </delete>
+</mapper>
